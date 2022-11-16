@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+
+* {
+  /* margin: 0;
+  padding: 0; */
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --medium-spacing: 8px;
+  --normal-spacing: 16px;
+
+  --normal-size: 1rem;
+  --small-size: 0.8rem;
+  --large-size: 2rem;
+  --xlarge-size: 4rem;
+
+  --normal-bold: 400;
+  --medium-bold: 500;
+  --high-bold: 700;
+  --extra-bold: 900;
+}
+
+.container {
+  width: 30%;
+  height: auto;
+  margin: 0 auto;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  border: 5px solid #666;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "current-forcast current-forcast"
+    "hourly-forcast hourly-forcast"
+    "five-day-forcast five-day-forcast"
+    "feels humidity";
+  gap: 10px;
+}
+
+.container > article {
+  border: 2px solid #666;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.container #current-forecast {
+  /* border: 2px solid red; */
+  /* padding: 25px 20px; */
+  /* width: 85%; */
+  /* margin: 0; */
+  /* text-align: center; */
+  grid-area: current-forcast;
+}
+
+.container #current-forecast h3 {
+  font-size: var(--large-size);
+}
+
+.container #current-forecast .temp {
+  font-size: var(--xlarge-size);
+  margin: 0;
+}
+
+.container #current-forecast .descp,
+.container #current-forecast .min-max {
+  font-size: var(--normal-size);
+  font-weight: var(--medium-bold);
+  text-transform: capitalize;
+}
+
+.container #hourly-forecast {
+  /* border: 2px solid red; */
+  /* padding: 25px 20px;
+  width: 85%;
+  margin: 0 auto; */
+  text-align: center;
+  grid-area: hourly-forcast;
+}
+
+main #five-days-forecast {
+  /* border: 2px solid red; */
+  /* padding: 25px 20px;
+  width: 85%;
+  margin: 0 auto; */
+  text-align: center;
+  grid-area: five-day-forcast;
+}
+
+main #feels {
+  /* border: 2px solid red; */
+  /* padding: 25px 20px; */
+  /* width: 45%; */
+  /* margin: 0 auto; */
+  /* text-align: center; */
+  /* display: inline; */
+  grid-area: feels;
+}
+
+.container,
+#humidity {
+  grid-area: humidity;
+  /* border: 2px solid red; */
+}
+
+.hourly-container {
+  gap: 15px;
+}
+
+.hourly-container article {
+  /* border: 1px solid #666; */
+  border-radius: 5px;
+  /* margin: 0 5px 5px 0; */
+  /* padding: 5px; */
+  width: 7rem;
+}
+
+.hourly-container article h3 {
+  /* border: 2px solid red; */
+  /* padding: 1px; */
+  /* font-weight: var(--high-bold); */
+}
+
+.hourly-container article img {
+  /* border: 2px solid black; */
+  width: 100px;
+  height: 100px;
+  /* object-fit: cover; */
+}
+
+.hourly-container article .hourly-temp {
+  /* border: 2px solid blue; */
+  font-weight: var(--high-bold);
+}
+
+#hourly-forecast > h3 {
+  font-size: var(--large-size);
+}
+
+.hourly-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(100px, 1fr);
+  overflow-x: auto;
+}
+
+.hourly-container article .time {
+}
+
+#feels h3,
+#humidity h3 {
+  font-size: 1.5rem;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <article id="current-forecast">
+        <h3 class="city">City Name</h3>
+        <p class="population">
+          <i class="bi bi-people-fill"></i>
+          <span class="population-data">City Population</span>
+        </p>
+        <p class="temp">Temp</p>
+        <p class="descp">Desc</p>
+        <p class="min-max">H L</p>
+      </article>
+
+      <article id="hourly-forecast">
+        <h3>Hourly forecast</h3>
+        <section class="hourly-container">
+          <article>
+            <h2 class="time">Now</h2>
+            <img class="icon" src="" alt="" />
+            <p class="hourly-temp">temp</p>
+          </article>
+        </section>
+      </article>
+
+      <article id="five-days-forecast">
+        <h3>5 day forecast</h3>
+        <article>
+          <h3>Today</h3>
+          <p>icon</p>
+          <p>low</p>
+          <p>high</p>
+        </article>
+        <article>
+          <h2>Thursday</h2>
+          <p>icon</p>
+          <p>low</p>
+          <p>high</p>
+        </article>
+      </article>
+
+      <article id="feels">
+        <h3>Feels like</h3>
+        <p class="feels-temp">temp</p>
+      </article>
+      <article id="humidity">
+        <h3>Humidity</h3>
+        <p class="humidity-val">value</p>
+      </article>
+    </main>
+
+    <script src="index.js"></script>
+  </body>
+</html>
