@@ -155,3 +155,52 @@ main #feels {
 #humidity h3 {
   font-size: 1.5rem;
 }
+
+#five-days-forecast .days-forecast-title {
+  font-size: var(--large-size);
+}
+
+.five-days-container {
+  display: grid;
+  grid-auto-flow: row;
+  padding: 5px;
+}
+
+.five-days-container h3 {
+  font-size: ;
+}
+
+.five-days-container .day-forecast {
+  /* border: 2px solid green; */
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(4, 1fr);
+  /* grid-template: auto/repeat(4, 1fr); */
+  place-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #777;
+}
+
+.five-days-container .day-forecast img {
+  width: 75px;
+  height: 75px;
+}
+
+.five-days-container .day-forecast h3 {
+  text-transform: capitalize;
+  justify-self: start;
+}
+
+.five-days-container .day-forecast .min-temp,
+.five-days-container .day-forecast .max-temp {
+  font-weight: var(--high-bold);
+}
+
+.five-days-container .day-forecast .min-temp {
+  opacity: 60%;
+}
+
+.five-days-container .day-forecast p {
+  /* border: 2px solid red; */
+  /* display: inline; */
+}
