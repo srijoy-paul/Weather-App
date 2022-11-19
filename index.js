@@ -1,6 +1,9 @@
 const API_key = "76cbcdfffbc0360b58e49191bb4ee752";
 
 const DAY_OF_THE_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+let lat_lon = [];
+let selectedCityText;
+let selectedCity;
 
 function createIconURL(iconValue) {
   const iconURL = `http://openweathermap.org/img/wn/${iconValue}@2x.png`;
@@ -8,11 +11,21 @@ function createIconURL(iconValue) {
   return iconURL;
 }
 
-async function getWeatherData(city_name) {
-  const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${API_key}&units=metric`
-  );
+async function getWeatherData(city_det) {
+  console.log("this" + city_det);
 
+  let response;
+  if (city_det[0] && city_det[1]) {
+    response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${city_det[0]}&lon=${city_det[1]}&appid=${API_key}&units=metric`
+    );
+  } else {
+    response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city_det[2]}&appid=${API_key}&units=metric`
+    );
+  }
+
+  // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${city_det[0]}&lon=${city_det[1]}&appid=${API_key}&units=metric`);
   const data = await response.json();
   console.log(data);
   return data;
@@ -38,15 +51,15 @@ function loadWeatherData(data, hourlyData) {
 }
 
 async function getHourlyWeatherData(city_name) {
-  const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${city_name}&appid=${API_key}&units=metric`
-  );
+  console.log("cn"+city_name);
+  const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city_name[0]}&lon=${city_name[1]}&appid=${API_key}&units=metric`);
   let data = await response.json();
   console.log(data);
   return data;
 }
 
 function loadHourlyWeatherData(currentWeatherData, data) {
+  // console.log("loadHD"+data,hourlyData);
   let innerhtmlText = "";
 
   const timeFormatter = Intl.DateTimeFormat("en", {
@@ -146,13 +159,115 @@ function loadFiveDaysData(hourlyData) {
     innerhtmlText;
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  let city = "Dhanbad"; //prompt("Add city")
-  const data = await getWeatherData(city);
-  const hourlyData = await getHourlyWeatherData(city);
+function debounce(func) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, 500);
+  };
+}
+
+async function getCities(inputtext) {
+  const response = await fetch(
+    `http://api.openweathermap.org/geo/1.0/direct?q=${inputtext}&limit=5&appid=${API_key}`
+  );
+  const data = await response.json();
+  // console.log(data);
+  return data;
+}
+
+let loadCities = async (e) => {
+  let innerhtmlText = "";
+  let hasCity = new Set();
+  if(e.target.value){
+    selectedCity=null;
+    selectedCityText="";
+  }
+  if(e.target.value && (selectedCityText !== e.target.value)){
+
+    let citiesAcqrInput = await getCities(e.target.value);
+    console.log(citiesAcqrInput);
+    for (let searchRes of citiesAcqrInput) {
+      console.log(searchRes.name + searchRes.state + searchRes.country);
+      if (hasCity.has(searchRes.name + searchRes.state + searchRes.country)) {
+        continue;
+      } else {
+        hasCity.add(searchRes.name + searchRes.state + searchRes.country);
+        innerhtmlText += `<option city-data-lat="${searchRes.lat}" city-data-lon="${searchRes.lon}" city-name="${searchRes.name}" value="${searchRes.name}, ${searchRes.state}, ${searchRes.country}"></option>`;
+      }
+  }
+  // console.log(e);
+  document.getElementById("cities").innerHTML = innerhtmlText;
+  }
+};
+
+let debounceSearch = debounce((e) => {
+  loadCities(e);
+});
+
+async function loadData() {
+  const data = await getWeatherData(lat_lon);
+  const hourlyData = await getHourlyWeatherData(lat_lon);
   loadWeatherData(data, hourlyData);
   loadHourlyWeatherData(data, hourlyData);
   loadFeelsLikeData(data);
   loadHumidityData(data);
   loadFiveDaysData(hourlyData);
+}
+
+let handleSelectedCity = (e) => {
+  console.log(e.target.value);
+  selectedCityText=e.target.value;
+  lat_lon=[];
+  // console.log(document.querySelectorAll("#cities>option"));
+  let options=document.querySelectorAll("#cities>option");
+  if(options.length){
+  for (let findOption of document.querySelectorAll("#cities>option")) {
+    if (findOption.getAttribute("value") === selectedCityText) {
+      console.log("hanle" + findOption.getAttribute("city-name"));
+      lat_lon.push(findOption.getAttribute("city-data-lat"));
+      lat_lon.push(findOption.getAttribute("city-data-lon"));
+      lat_lon.push(findOption.getAttribute("city-name"));
+    }
+  }
+}
+  // if(options?.length){
+  //   let selectedOption= Array.from(options).find(opt=>opt.value===selectedCityText);
+  //   selectedCity=JSON.parse(selectedOption);
+  // }
+  console.log(lat_lon);
+  loadData();
+};
+
+function loadIniForecast(){
+  lat_lon=[];
+  navigator.geolocation.getCurrentPosition(({coords})=>{
+    console.log(coords);
+    lat_lon.push(coords.latitude);
+    lat_lon.push(coords.longitude);
+    loadData();
+
+  },error=> console.log(error)); 
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  loadIniForecast();
+  document
+    .getElementById("searchbar")
+    .addEventListener("input", debounceSearch);
+  document
+    .getElementById("searchbar")
+    .addEventListener("change", handleSelectedCity);
+
+  // let city = "Dhanbad"; //prompt("Add city")
+  // const data = await getWeatherData(city);
+  // const hourlyData = await getHourlyWeatherData(city);
+  // loadWeatherData(data, hourlyData);
+  // loadHourlyWeatherData(data, hourlyData);
+  // loadFeelsLikeData(data);
+  // loadHumidityData(data);
+  // loadFiveDaysData(hourlyData);
+  // loadCities();
 });

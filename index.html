@@ -13,6 +13,18 @@
   </head>
   <body>
     <main class="container">
+      <form id="search">
+        <input
+          id="searchbar"
+          list="cities"
+          type="search"
+          placeholder="Enter your city"
+        />
+        <datalist id="cities">
+          <option value="Bangalore"></option>
+          <option value="Dhanbad"></option>
+        </datalist>
+      </form>
       <article id="current-forecast">
         <h3 class="city">City Name</h3>
         <p class="population">
@@ -20,7 +32,7 @@
           <span class="population-data">City Population</span>
         </p>
         <p class="temp">Temp</p>
-        <p class="descp">Desc</p>
+        <p class="descp">--Desc--</p>
         <p class="min-max">H L</p>
       </article>
 
@@ -29,8 +41,9 @@
         <section class="hourly-container">
           <article>
             <h2 class="time">Now</h2>
-            <img class="icon" src="" alt="" />
-            <p class="hourly-temp">temp</p>
+            <!-- <img class="icon" src="" alt="" /> -->
+            <p class="icon">--</p>
+            <p class="hourly-temp">--</p>
           </article>
         </section>
       </article>
@@ -40,26 +53,26 @@
         <section class="five-days-container">
           <article class="day-forecast">
             <h3>Today</h3>
-            <p>icon</p>
-            <p>low</p>
-            <p>high</p>
+            <p>--</p>
+            <p>--low--</p>
+            <p>--high--</p>
           </article>
           <article class="day-forecast">
             <h3>Thursday</h3>
-            <p>icon</p>
-            <p>low</p>
-            <p>high</p>
+            <p>--</p>
+            <p>--low--</p>
+            <p>--high--</p>
           </article>
         </section>
       </article>
 
       <article id="feels">
         <h3>Feels like</h3>
-        <p class="feels-temp">temp</p>
+        <p class="feels-temp">--</p>
       </article>
       <article id="humidity">
         <h3>Humidity</h3>
-        <p class="humidity-val">value</p>
+        <p class="humidity-val">--</p>
       </article>
     </main>
 
