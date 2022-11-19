@@ -6,7 +6,7 @@ let selectedCityText;
 let selectedCity;
 
 function createIconURL(iconValue) {
-  const iconURL = `http://openweathermap.org/img/wn/${iconValue}@2x.png`;
+  const iconURL = `https://openweathermap.org/img/wn/${iconValue}@2x.png`;
   // console.log(iconURL);
   return iconURL;
 }
@@ -171,7 +171,7 @@ function debounce(func) {
 
 async function getCities(inputtext) {
   const response = await fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${inputtext}&limit=5&appid=${API_key}`
+    `https://api.openweathermap.org/geo/1.0/direct?q=${inputtext}&limit=5&appid=${API_key}`
   );
   const data = await response.json();
   // console.log(data);
