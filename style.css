@@ -23,9 +23,9 @@
 }
 
 .container {
-  width: 30%;
+  max-width: 60%;
   height: auto;
-  margin: 0 auto;
+  margin: 16px auto;
   /* display: flex;
   flex-direction: column;
   align-items: center; */
@@ -112,12 +112,14 @@ main #feels {
   /* text-align: center; */
   /* display: inline; */
   grid-area: feels;
+  align-self: center;
 }
 
 .container,
 #humidity {
   grid-area: humidity;
   /* border: 2px solid red; */
+  align-self: center;
 }
 
 .hourly-container {
@@ -217,4 +219,15 @@ main #feels {
 .five-days-container .day-forecast p {
   /* border: 2px solid red; */
   /* display: inline; */
+}
+
+@media (width>=970px){
+  .container{
+    grid-template-columns: repeat(4,1fr);
+    grid-template-areas:
+    "search search search search"
+    "current-forcast current-forcast current-forcast current-forcast"
+    "hourly-forcast hourly-forcast five-day-forcast five-day-forcast"
+    "feels humidity five-day-forcast five-day-forcast";
+  }  
 }
